@@ -204,7 +204,7 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 # Additional static files (For frontend build)
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'staticfiles'),
-    os.path.join(BASE_DIR.parent, "frontend", "dist"),
+    os.path.join(BASE_DIR, "frontend", "dist"),
 ]
 # Media files (Uploaded images, documents, etc.)
 MEDIA_URL = '/media/'

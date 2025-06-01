@@ -105,6 +105,7 @@ INSTALLED_APPS = [
     'channels',
     'users',
     'forum',
+    'notify',
 
 ]
 
@@ -122,7 +123,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     
 ]
-CACHE_MIDDLEWARE_SECONDS = 60
+CACHE_MIDDLEWARE_SECONDS = 10
 INTERNAL_IPS = [
     # ...
     "127.0.0.1",
@@ -232,18 +233,14 @@ CORS_ALLOW_HEADERS = [
 CORS_ALLOW_CREDENTIALS = True
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:5174",
-    "https://comics-website-4zhh.onrender.com"
 ]
 AUTH_USER_MODEL = 'users.CustomUser'
 
-CHANNEL_LAYES = {
+CHANNEL_LAYERS = {
     "default": {
         "BACKEND": "channels_redis.core.RedisChannelLayer",
         "CONFIG": {
-            "hosts": [("localhost", 6379)],
-        }
-    }
+            "hosts": [('redis', 6379)],
+        },
+    },
 }
-CSRF_TRUSTED_ORIGINS = [
-    "https://comics-website-4zhh.onrender.com",
-]

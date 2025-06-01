@@ -23,6 +23,7 @@ from .serializers import CommentsSerializer
 from users.authentication import CookieJWTAuthentication
 from rest_framework.decorators import authentication_classes
 from django.shortcuts import get_object_or_404
+from notify.utils import sendNotifyComment
 # from .models import Notification
 # from .serializers import NotificationSerializer
 User = get_user_model()
@@ -341,11 +342,12 @@ class CommentViewSet(viewsets.ModelViewSet):
         return Comments.objects.none()
 
     def perform_create(self, serializer):
-        comment = serializer.save(user=self.request.user)
+        comment = serializer.save(user=self.request.user)        
         obj = comment.content_object
         if hasattr(obj, 'numComments'):
             obj.numComments = getattr(obj, 'numComments', 0) + 1
             obj.save(update_fields=['numComments'])
+        sendNotifyComment(comment)
 
     def perform_destroy(self, instance):
         user = self.request.user
@@ -377,7 +379,7 @@ class MarkAsSeenViewSet():
 
     def post(self, request):
         Notification.objects.filter(user=request.user, seen = False).update(seen=True)
-        return response({'status: 200 OK'}, status=200)
+        return Response({'status: 200 OK'}, status=200)
 
 @authentication_classes([CookieJWTAuthentication])
 class NotificationDeleteViewSet():
@@ -391,32 +393,3 @@ class NotificationDeleteViewSet():
 
         # Xoá thông báo
         instance.delete()
-
-# Leaderboard for top liked novels and mangas
-# @api_view(["GET"])
-# @permission_classes([AllowAny])
-# def TopLikedPosts(request):
-#     novels = Novel.objects.all().order_by("-numLikes")[:20]
-#     mangas = Manga.objects.all().order_by("-numLikes")[:20]
-
-#     data = []
-#     for novel in novels:
-#         data.append({
-#             "id": novel._id,
-#             "title": novel.title,
-#             "numLikes": novel.numLikes,
-#             "type": "novel",
-#             "cover": novel.cover.url if novel.cover else None
-#         })
-#     for manga in mangas:
-#         data.append({
-#             "id": manga._id,
-#             "title": manga.title,
-#             "numLikes": manga.numLikes,
-#             "type": "manga",
-#             "cover": manga.cover.url if manga.cover else None
-#         })
-
-#     # Sắp xếp lại để lấy top 20 tổng hợp
-#     top_20 = sorted(data, key=lambda x: x["numLikes"], reverse=True)[:20]
-#     return Response(top_20, status=200)

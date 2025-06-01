@@ -11,7 +11,7 @@ import SearchBar from "./SearchBar";
 import ThemeSwitcher from "./ThemeSwitcher";
 import UserMenu from "./UserMenu";
 import MobileMenu from "./MobileMenu";
-// import Notify from "./Notify";
+import Notify from "./Notify";
 
 import { autoLogin } from "../../actions/userAction";
 const Navbar = () => {
@@ -31,6 +31,9 @@ const Navbar = () => {
       <SearchBar isMobile = {false} />
     </div>
     
+    <div className="flex-shrink-0">
+      <Notify />
+    </div>
     <div className="flex-shrink-0">
       <ThemeSwitcher />
     </div>

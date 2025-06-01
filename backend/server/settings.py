@@ -244,3 +244,6 @@ CHANNEL_LAYES = {
         }
     }
 }
+CSRF_TRUSTED_ORIGINS = [
+    "https://comics-website-4zhh.onrender.com",
+]

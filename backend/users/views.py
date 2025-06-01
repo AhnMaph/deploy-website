@@ -282,7 +282,7 @@ def ToggleFavorite(request):
         except Manga.DoesNotExist:
             return Response({"error": "Manga not found"}, status=status.HTTP_404_NOT_FOUND)
     print("Debug fav: ",post_id)
-    fav = Favorite.objects.filter(user=user, post_id=post_id).first()
+    fav = Favorite.objects.filter(user=user, post_id=post_id, type=type).first()
 
     if fav:
         # Nếu đã fav → unfav
@@ -379,7 +379,7 @@ class MarkAsSeenViewSet():
 
     def post(self, request):
         Notification.objects.filter(user=request.user, seen = False).update(seen=True)
-        return response({'status: 200 OK'}, status=200)
+        return Response({'status: 200 OK'}, status=200)
 
 @authentication_classes([CookieJWTAuthentication])
 class NotificationDeleteViewSet():
@@ -393,32 +393,3 @@ class NotificationDeleteViewSet():
 
         # Xoá thông báo
         instance.delete()
-
-# Leaderboard for top liked novels and mangas
-# @api_view(["GET"])
-# @permission_classes([AllowAny])
-# def TopLikedPosts(request):
-#     novels = Novel.objects.all().order_by("-numLikes")[:20]
-#     mangas = Manga.objects.all().order_by("-numLikes")[:20]
-
-#     data = []
-#     for novel in novels:
-#         data.append({
-#             "id": novel._id,
-#             "title": novel.title,
-#             "numLikes": novel.numLikes,
-#             "type": "novel",
-#             "cover": novel.cover.url if novel.cover else None
-#         })
-#     for manga in mangas:
-#         data.append({
-#             "id": manga._id,
-#             "title": manga.title,
-#             "numLikes": manga.numLikes,
-#             "type": "manga",
-#             "cover": manga.cover.url if manga.cover else None
-#         })
-
-#     # Sắp xếp lại để lấy top 20 tổng hợp
-#     top_20 = sorted(data, key=lambda x: x["numLikes"], reverse=True)[:20]
-#     return Response(top_20, status=200)

@@ -281,7 +281,7 @@ def ToggleFavorite(request):
         except Manga.DoesNotExist:
             return Response({"error": "Manga not found"}, status=status.HTTP_404_NOT_FOUND)
     print("Debug fav: ",post_id)
-    fav = Favorite.objects.filter(user=user, post_id=post_id).first()
+    fav = Favorite.objects.filter(user=user, post_id=post_id, type=type).first()
 
     if fav:
         # Nếu đã fav → unfav

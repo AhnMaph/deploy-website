@@ -112,11 +112,11 @@ MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.security.SecurityMiddleware',
-    'django.middleware.cache.UpdateCacheMiddleware',
+    # 'django.middleware.cache.UpdateCacheMiddleware',
     "debug_toolbar.middleware.DebugToolbarMiddleware",
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
-    'django.middleware.cache.FetchFromCacheMiddleware',
+    # 'django.middleware.cache.FetchFromCacheMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
@@ -203,7 +203,7 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 # Additional static files (For frontend build)
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'staticfiles'),
-    os.path.join(BASE_DIR.parent, "frontend", "dist"),
+    os.path.join(BASE_DIR, "frontend", "dist"),
 ]
 # Media files (Uploaded images, documents, etc.)
 MEDIA_URL = '/media/'

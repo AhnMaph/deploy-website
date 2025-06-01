@@ -232,6 +232,7 @@ CORS_ALLOW_HEADERS = [
 CORS_ALLOW_CREDENTIALS = True
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:5174",
+    "https://comics-website-4zhh.onrender.com"
 ]
 AUTH_USER_MODEL = 'users.CustomUser'
 
